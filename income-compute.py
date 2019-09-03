@@ -1,6 +1,6 @@
 import math
 
-income = 30000
+income = 26000
 rateNumb = 5
 incomeRate=[]
 
@@ -22,26 +22,20 @@ incomeRate.append({
 
 incomeRate.append({
     'name': '公积金:        ',
-    'value':0.12
+    'value':0.05
 })
 
-# incomeRate.append({
-#     'name': '所得税:        ',
-#     'value': 0.16
-# })
 
-antiTax = 0
 
+sumInsurance = 0
 for item in incomeRate:
     curMoney = income * item['value'];
-    antiTax += curMoney
+    sumInsurance += curMoney
     print("%s %d" % (item['name'], math.ceil(curMoney)))
 
 supportParents = 1000
-houseLoan = 1000
-
-antiTax += supportParents
-antiTax += houseLoan
+houseLoan = 0
+basicMoney = 5000
 
 maxIncome = 10000000000
 taxRateList = [[0, 3000, 0.03, 0], \
@@ -52,17 +46,18 @@ taxRateList = [[0, 3000, 0.03, 0], \
              [55000, 80000, 0.35, 7160], \
              [80000, maxIncome, 0.45, 15160]]
 
-afterInsurance = income - antiTax
+moneyForTax = income - sumInsurance - supportParents - houseLoan - basicMoney
 tax = 0
 
-print("交税部分:     %d" % afterInsurance)
+print("交税部分:       %d" % moneyForTax)
 
 for item in taxRateList:
-    if afterInsurance > item[0] and afterInsurance <= item[1]:
-        tax = afterInsurance * item[2] - item[3]
+    if moneyForTax > item[0] and moneyForTax <= item[1]:
+        tax = moneyForTax * item[2] - item[3]
         break
 
-print ("税款:       %d" % tax)
+print ("税款:           %d" % tax)
 
-incomeLeft = afterInsurance - tax + supportParents + houseLoan
-print ("到手收入:   %d" % incomeLeft)
+incomeLeft = income - sumInsurance - tax
+
+print ("到手收入:       %d" % incomeLeft)
