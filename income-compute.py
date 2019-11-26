@@ -25,11 +25,20 @@ incomeRate.append({
     'value':0.05
 })
 
-
+houseLimit ={
+    "0.05":2464,
+    "0.06":2956,
+    "0.07":3448
+}
 
 sumInsurance = 0
 for item in incomeRate:
     curMoney = income * item['value'];
+
+    if item['name'] == '公积金':
+        if curMoney > houseLimit[str(item['value'])] / 2:
+            curMoney = houseLimit[str(item['value'])] / 2
+
     sumInsurance += curMoney
     print("%s %d" % (item['name'], math.ceil(curMoney)))
 
@@ -39,12 +48,12 @@ basicMoney = 5000
 
 maxIncome = 10000000000
 taxRateList = [[0, 3000, 0.03, 0], \
-             [3000, 12000, 0.1, 210], \
-             [12000, 25000, 0.20, 1410], \
-             [25000, 35000, 0.25, 2660], \
-             [35000, 55000, 0.30, 4410], \
-             [55000, 80000, 0.35, 7160], \
-             [80000, maxIncome, 0.45, 15160]]
+               [3000, 12000, 0.1, 210], \
+               [12000, 25000, 0.20, 1410], \
+               [25000, 35000, 0.25, 2660], \
+               [35000, 55000, 0.30, 4410], \
+               [55000, 80000, 0.35, 7160], \
+               [80000, maxIncome, 0.45, 15160]]
 
 moneyForTax = income - sumInsurance - supportParents - houseLoan - basicMoney
 tax = 0
