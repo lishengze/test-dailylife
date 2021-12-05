@@ -1,6 +1,7 @@
 import math
 
-income = 26000
+income = 18333
+subsidy = 1300
 rateNumb = 5
 incomeRate=[]
 
@@ -22,7 +23,7 @@ incomeRate.append({
 
 incomeRate.append({
     'name': '公积金:        ',
-    'value':0.05
+    'value':0.12
 })
 
 houseLimit ={
@@ -36,7 +37,7 @@ for item in incomeRate:
     curMoney = income * item['value'];
 
     if item['name'] == '公积金':
-        if curMoney > houseLimit[str(item['value'])] / 2:
+        if str(item['value']) in houseLimit and curMoney > houseLimit[str(item['value'])] / 2:
             curMoney = houseLimit[str(item['value'])] / 2
 
     sumInsurance += curMoney
@@ -67,6 +68,6 @@ for item in taxRateList:
 
 print ("税款:           %d" % tax)
 
-incomeLeft = income - sumInsurance - tax
+incomeLeft = income - sumInsurance - tax + subsidy
 
 print ("到手收入:       %d" % incomeLeft)
